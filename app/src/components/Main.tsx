@@ -1,6 +1,3 @@
-import {useCall, useCalls, useContractFunction, useEtherBalance, useEthers} from "@usedapp/core";
-import {formatEther} from "ethers/lib/utils";
-import {BigNumber, Contract, utils} from "ethers";
 
 export function Main() {
     return (

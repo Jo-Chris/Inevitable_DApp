@@ -4,30 +4,32 @@ import {Contract, utils} from "ethers";
 
 export function Main() {
 
-    // this is the wallet section
+    // get information from wallet
     const {account, chainId} = useEthers();
     const balance = useEtherBalance(account);
 
-    // create our contract instance
+    // call read function on SC
     const cInterface = new utils.Interface(require('../contract/abi.json'));
-    const cAddr = '0x54ab7e76e90892b27a65Bd01FBa39232B83bD568';
+    const cAddr = '0x74B6485289e55EcEA94dEF49B25ced097beAFF14';
     const contract = new Contract(cAddr, cInterface);
 
-    // custom hook for multi calls
+    // calling readonly functions
     const useMultiCalls = (calls: any[]) => {
-        const callResult = useCalls(calls);
-        return callResult.map(callResult => callResult ? callResult.value : null);
+        const callsResult = useCalls(calls);
+        return callsResult.map(result => result ? result.value : null);
     }
-
     const [owner, name, symbol, balanceOf] = useMultiCalls([
-            {contract, method: 'owner', args: []},
-            {contract, method: 'name', args: []},
-            {contract, method: 'symbol', args: []},
-            {contract, method: 'balanceOf', args: [account]},
-        ]
-    )
+        {contract: contract, method: 'owner', args: []},
+        {contract: contract, method: 'name', args: []},
+        {contract: contract, method: 'symbol', args: []},
+        {contract: contract, method: 'balanceOf', args: [account]},
+    ]);
 
-    const {state, send: mint} = useContractFunction(contract, 'safeMint');
+    // call the mint function
+    const {
+        state: mintState,
+        send: mint
+    } = useContractFunction(contract, 'safeMint');
 
     return (
         <div className="section-container">
@@ -37,7 +39,7 @@ export function Main() {
                     <div className="data-container">
                         <p>Address</p>
                         <hr/>
-                        <p className='addr'>{account ?? 'n/v'}</p>
+                        <p className="addr">{account ?? 'n/v'}</p>
                     </div>
                     <div className="data-container">
                         <p>Chain ID</p>
@@ -47,7 +49,7 @@ export function Main() {
                     <div className="data-container">
                         <p>Balance</p>
                         <hr/>
-                        <p>{balance ? formatEther(balance).slice(0, 7) + ' ETH' : 'n/v'}</p>
+                        <p>{balance ? formatEther(balance).slice(0, 7) + ' Goerli ETH' : 'n/v'}</p>
                     </div>
                 </div>
             </div>
@@ -57,7 +59,7 @@ export function Main() {
                     <div className="data-container">
                         <p>Owner</p>
                         <hr/>
-                        <p className="addr">{owner ?? 'fetch error'}</p>
+                        <p className="addr">{owner ?? 'fetch error!'}</p>
                     </div>
                     <div className="data-container">
                         <p>Name</p>
@@ -72,17 +74,22 @@ export function Main() {
                     <div className="data-container">
                         <p>Mint Status</p>
                         <hr/>
-                        <p>{state.status}</p>
+                        <p>{mintState.status}</p>
                     </div>
                     {
                         account && <div className="data-container">
-                            <button className="btn btn-dark" onClick={() => mint(account, '/this-is-my-link-to-it')}>Mint 🚀</button>
+                            <button
+                                className="btn btn-dark"
+                                onClick={() => mint(account, '/this-is-my-url')}
+                            >
+                                Mint 🚀
+                            </button>
                         </div>
                     }
                     <div className="data-container">
-                        <p>Amount minted: </p>
+                        <p>Connected Wallet successful mints</p>
                         <hr/>
-                        <p>{Number(balanceOf) ?? 'fetch error'}</p>
+                        <p>{Number(balanceOf) ?? 'Fetch error!'}</p>
                     </div>
                 </div>
             </div>

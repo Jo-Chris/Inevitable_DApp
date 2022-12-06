@@ -4,7 +4,7 @@ export function Navbar() {
 
     const {account, activateBrowserWallet, deactivate} = useEthers();
 
-    const handleConnect = () => {
+    const handleConnection = () => {
         if (account) {
             deactivate();
         } else {
@@ -15,7 +15,7 @@ export function Navbar() {
     return (
         <nav className="nav">
             <h1>Smart Contracts on the Frontend</h1>
-            <button className="btn btn-dark" onClick={() => handleConnect()}>
+            <button className="btn btn-dark" onClick={() => handleConnection()}>
                 {
                     account ? 'Deactivate' : 'Connect'
                 }

@@ -1,6 +1,8 @@
+import {useCall, useCalls, useContractFunction, useEtherBalance, useEthers} from "@usedapp/core";
+import {formatEther} from "ethers/lib/utils";
+import {BigNumber, Contract, utils} from "ethers";
 
 export function Main() {
-
     return (
         <div className="section-container">
             <div className="section" id="sec-one">
@@ -9,17 +11,17 @@ export function Main() {
                     <div className="data-container">
                         <p>Address</p>
                         <hr/>
-                        <p>n/v</p>
+                        <p>{'n/v'}</p>
                     </div>
                     <div className="data-container">
                         <p>Chain ID</p>
                         <hr/>
-                        <p>n/v</p>
+                        <p>{'n/v'}</p>
                     </div>
                     <div className="data-container">
                         <p>Balance</p>
                         <hr/>
-                        <p>n/v</p>
+                        <p>{}</p>
                     </div>
                 </div>
             </div>
@@ -27,18 +29,30 @@ export function Main() {
                 <h1 className="section-header">Contract Details</h1>
                 <div className="data-chunks">
                     <div className="data-container">
+                        <p>Owner</p>
+                        <hr/>
+                        <p>{}</p>
+                    </div>
+                    <div className="data-container">
                         <p>Name</p>
                         <hr/>
-                        <p>n/v</p>
+                        <p>{'n/v'}</p>
                     </div>
                     <div className="data-container">
                         <p>Symbol</p>
                         <hr/>
-                        <p>n/v</p>
+                        <p>{'n/v'}</p>
                     </div>
                     <div className="data-container">
-                        <button className="btn btn-dark">Mint 🚀</button>
+                        <p>Mint Status</p>
+                        <hr/>
+                        <p>{'n/v'}</p>
                     </div>
+                    {
+                        <div className="data-container">
+                            <button className="btn btn-dark">Mint 🚀</button>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
